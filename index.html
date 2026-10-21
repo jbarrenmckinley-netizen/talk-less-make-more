@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Talk Less, Make More — Sales Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e1117; --panel:#161b24; --panel-2:#1c2330; --line:#28303d;
+    --text:#e8edf5; --muted:#8a97ab; --radius:14px;
+    --yellow:#f5c518; --green:#2ecc71; --blue:#3d9be9; --red:#e74c3c;
+    --accent:var(--blue);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    background:radial-gradient(1100px 560px at 50% -12%,#1c2634 0%,transparent 60%),var(--bg);
+    background-attachment:fixed;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .app{max-width:1000px;margin:0 auto;padding:0 20px 100px}
+
+  /* ===== TOPBAR ===== */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:18px 0;margin-bottom:26px;border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:30;
+    background:linear-gradient(180deg,var(--bg) 74%,transparent);
+  }
+  .brand{display:flex;align-items:center;gap:11px}
+  .brand-mark{
+    width:34px;height:34px;border-radius:10px;flex:0 0 auto;
+    background:conic-gradient(from 220deg,var(--yellow),var(--green),var(--blue),var(--red),var(--yellow));
+    box-shadow:0 0 0 1px #ffffff14,0 6px 18px -6px #000;
+    animation:spinSlow 14s linear infinite;
+  }
+  @keyframes spinSlow{to{transform:rotate(360deg)}}
+  .brand h1{font-size:14.5px;font-weight:700;letter-spacing:-.2px;line-height:1.15}
+  .brand span{display:block;font-size:10.5px;color:var(--muted);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .topbar-right{display:flex;align-items:center;gap:10px}
+  .ring{
+    display:none;align-items:center;gap:9px;font-size:12px;font-weight:700;
+    padding:6px 13px;border-radius:999px;background:var(--panel);border:1px solid var(--line);
+  }
+  .ring.on{display:flex;animation:fadeUp .4s ease}
+  .ring i{width:8px;height:8px;border-radius:50%;background:var(--accent);display:block;
+    box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 22%,transparent);
+    animation:pulseDot 2s ease-in-out infinite}
+  @keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.45}}
+  .ring em{font-style:normal;color:var(--muted);font-weight:600}
+
+  .btn{
+    font:inherit;font-size:13px;font-weight:600;cursor:pointer;border-radius:10px;
+    padding:10px 18px;border:1px solid transparent;transition:.18s ease;
+  }
+  .btn-primary{background:var(--accent);color:#0b0e13}
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 10px 24px -12px var(--accent)}
+  .btn-ghost{background:transparent;border-color:var(--line);color:var(--muted)}
+  .btn-ghost:hover{color:var(--text);border-color:#3a4557}
+  .btn-lg{font-size:14.5px;padding:14px 30px;border-radius:12px}
+  .btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;box-shadow:none!important}
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+  @keyframes slideIn{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+  @keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+  @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-70px) scale(1.4)}}
+  @keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent)}
+    50%{box-shadow:0 0 0 12px transparent}}
+  @keyframes confettiFall{
+    0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+    100%{transform:translateY(100vh) rotate(720deg);opacity:0}
+  }
+  .anim{animation:fadeUp .38s cubic-bezier(.2,.8,.2,1) both}
+  .anim-d1{animation-delay:.06s}
+  .anim-d2{animation-delay:.12s}
+  .anim-d3{animation-delay:.18s}
+
+  /* ===== CURRICULUM MAP ===== */
+  .home-head{text-align:center;padding:14px 0 30px}
+  .eyebrow{
+    display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:1.7px;text-transform:uppercase;
+    color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 14px;margin-bottom:18px;
+  }
+  .home-head h2{font-size:clamp(26px,4.6vw,42px);font-weight:800;letter-spacing:-1.3px;line-height:1.08;margin-bottom:12px}
+  .home-head h2 em{font-style:normal;background:linear-gradient(92deg,var(--yellow),var(--green),var(--blue),var(--red));
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 4s linear infinite}
+  @keyframes shine{to{background-position:200% center}}
+  .home-head p{color:var(--muted);max-width:540px;margin:0 auto 22px;font-size:14.5px;line-height:1.65}
+
+  .xp-hero{
+    max-width:420px;margin:0 auto 34px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:16px 20px;
+  }
+  .xp-hero-top{display:flex;justify-content:space-between;font-size:11px;font-weight:700;
+    letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .xp-track{height:9px;background:var(--panel-2);border-radius:99px;overflow:hidden}
+  .xp-track i{display:block;height:100%;border-radius:99px;transition:width .7s cubic-bezier(.4,0,.2,1);
+    background:linear-gradient(90deg,var(--yellow),var(--green),var(--blue),var(--red));
+    background-size:200% auto;animation:shine 3s linear infinite}
+
+  /* Phase block */
+  .phase{margin-bottom:30px;position:relative}
+  .phase-head{
+    display:flex;align-items:center;gap:13px;margin-bottom:15px;
+  }
+  .phase-icon{
+    width:38px;height:38px;border-radius:11px;flex:0 0 auto;display:grid;place-items:center;
+    font-size:17px;background:var(--panel-2);border:1px solid var(--line);
+    transition:.3s ease;
+  }
+  .phase.open .phase-icon{
+    background:var(--pc);border-color:transparent;
+    box-shadow:0 0 24px -6px var(--pc);
+  }
+  .phase-titles{flex:1}
+  .phase-titles h3{font-size:15px;font-weight:800;letter-spacing:-.2px;margin-bottom:2px}
+  .phase-titles span{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.4px}
+  .phase-count{font-size:11px;font-weight:800;color:var(--muted);letter-spacing:.8px}
+  .phase.locked{opacity:.45}
+  .phase.locked .phase-titles h3::after{content:' 🔒'}
+
+  .node-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(222px,1fr));gap:12px}
+
+  .node{
+    font:inherit;text-align:left;cursor:pointer;color:var(--text);position:relative;
+    background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:17px 18px;transition:.22s cubic-bezier(.2,.8,.2,1);overflow:hidden;width:100%;
+  }
+  .node::before{
+    content:'';position:absolute;inset:0 auto 0 0;width:3px;background:var(--accent);
+    transform:scaleY(0);transform-origin:bottom;transition:transform .25s ease;
+  }
+  .node:hover:not(.locked){border-color:color-mix(in srgb,var(--accent) 55%,var(--line));
+    transform:translateY(-4px);box-shadow:0 20px 44px -26px var(--accent)}
+  .node:hover:not(.locked)::before{transform:scaleY(1)}
+  .node.locked{opacity:.4;cursor:not-allowed;filter:grayscale(.6)}
+  .node.done{border-color:color-mix(in srgb,var(--accent) 34%,var(--line))}
+  .node.done .node-kicker{color:var(--accent)}
+  .node.done::after{
+    content:'✓';position:absolute;top:13px;right:15px;color:var(--accent);
+    font-weight:900;font-size:15px;animation:pop .35s ease;
+  }
+  .node.active{
+    border-color:var(--accent);
+    animation:glowPulse 2.2s ease-in-out infinite;
+  }
+  .node-kicker{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;
+    color:var(--muted);margin-bottom:9px;transition:.2s}
+  .node h4{font-size:14.5px;font-weight:700;letter-spacing:-.2px;margin-bottom:5px;line-height:1.3}
+  .node p{font-size:11.5px;color:var(--muted);line-height:1.5}
+  .node.locked .node-kicker::before{content:'🔒 '}
+
+  /* ===== CONTENT SHELL ===== */
+  .back-link{background:none;border:none;font:inherit;font-size:13px;font-weight:600;
+    color:var(--muted);cursor:pointer;padding:0;margin-bottom:20px;transition:.15s}
+  .back-link:hover{color:var(--text);transform:translateX(-3px)}
+  .head{text-align:center;padding:8px 0 28px}
+  .head h2{font-size:clamp(23px,4vw,33px);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:10px}
+  .head p{color:var(--muted);font-size:14.5px;line-height:1.65;max-width:560px;margin:0 auto}
+  .head .eyebrow{margin-bottom:14px}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:14px}
+  .panel h3{font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:12px}
+  .panel p{font-size:14px;line-height:1.7;color:#c9d3e2;margin-bottom:12px}
+  .panel p:last-child{margin-bottom:0}
+  .panel ul{margin:0 0 12px 18px}
+  .panel li{font-size:14px;line-height:1.7;color:#c9d3e2;margin-bottom:6px}
+  .panel b{color:var(--text)}
+  .panel .accent{color:var(--accent);font-weight:600}
+
+  .callout{
+    background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 14%,var(--panel)),var(--panel));
+    border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));
+    border-radius:var(--radius);padding:19px 21px;margin-bottom:14px;
+  }
+  .callout h5{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);
+    font-weight:800;margin-bottom:9px}
+  .callout p{font-size:14px;line-height:1.65;color:#d7dfeb}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+  .split > div{background:#0f141c99;border:1px solid var(--line);border-radius:12px;padding:15px}
+  .split h5{font-size:10.5px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:8px;font-weight:800}
+  .split p,.split li{font-size:13px;line-height:1.55;color:#c9d3e2}
+  .split ul{margin-left:16px}
+  .good h5{color:var(--green)} .bad h5{color:var(--red)}
+
+  /* ===== CHECK ===== */
+  .progress{height:6px;background:var(--panel-2);border-radius:99px;overflow:hidden;margin-bottom:26px}
+  .progress i{display:block;height:100%;border-radius:99px;
+    background:linear-gradient(90deg,var(--yellow),var(--green),var(--blue),var(--red));
+    background-size:200% auto;animation:shine 3s linear infinite;
+    transition:width .4s cubic-bezier(.4,0,.2,1)}
+  .q-meta{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);
+    font-weight:600;margin-bottom:12px}
+  .q-text{font-size:clamp(18px,3vw,23px);font-weight:700;letter-spacing:-.4px;line-height:1.35;margin-bottom:20px}
+  .options{display:flex;flex-direction:column;gap:9px}
+  .opt{
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:inherit;font-size:14.5px;
+    color:var(--text);cursor:pointer;background:var(--panel);border:1px solid var(--line);
+    border-radius:12px;padding:15px 17px;transition:.16s ease;
+  }
+  .opt:hover:not(:disabled){border-color:#41506a;background:var(--panel-2);transform:translateX(4px)}
+  .opt-key{flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    font-size:11.5px;font-weight:800;background:var(--panel-2);border:1px solid var(--line);color:var(--muted);
+    transition:.16s}
+  .opt:hover:not(:disabled) .opt-key{background:var(--accent);color:#0b0e13;border-color:transparent}
+  .opt.correct{border-color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--panel));
+    animation:pop .3s ease}
+  .opt.wrong{border-color:var(--red);background:color-mix(in srgb,var(--red) 12%,var(--panel))}
+  .opt:disabled{cursor:default;transform:none}
+  .fb{margin-top:16px;padding:16px 18px;border-radius:12px;font-size:13.5px;line-height:1.6;
+    border:1px solid var(--line);background:var(--panel-2);animation:fadeUp .3s ease}
+  .fb.ok{border-color:var(--green);background:color-mix(in srgb,var(--green) 10%,var(--panel))}
+  .fb.no{border-color:var(--red);background:color-mix(in srgb,var(--red) 10%,var(--panel))}
+  .fb b{color:var(--text)}
+
+  /* ===== OBJECTION LAB ===== */
+  .said{
+    font-size:16px;font-weight:600;font-style:italic;color:#ffb4ab;
+    border-left:3px solid var(--red);padding-left:15px;margin-bottom:20px;line-height:1.5;
+    animation:slideIn .4s ease;
+  }
+  textarea{
+    width:100%;min-height:120px;font:inherit;font-size:14px;line-height:1.6;color:var(--text);
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px;resize:vertical;
+    transition:.18s;
+  }
+  textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}
+  textarea::placeholder{color:#5c6879}
+  .rubric{margin-top:16px}
+  .rubric-row{
+    display:flex;align-items:flex-start;gap:11px;padding:11px 14px;border-radius:10px;
+    background:var(--panel-2);border:1px solid var(--line);margin-bottom:7px;font-size:13px;line-height:1.5;
+    animation:fadeUp .3s ease both;
+  }
+  .rubric-row .mark{font-weight:900;font-size:14px;flex:0 0 auto;width:16px}
+  .rubric-row .mark.y{color:var(--green)} .rubric-row .mark.n{color:#4a5568}
+  .rubric-row small{display:block;color:var(--muted);font-size:11.5px;margin-top:3px;line-height:1.5}
+  .score-big{font-size:40px;font-weight:800;letter-spacing:-1.5px;line-height:1;animation:pop .4s ease}
+
+  /* ===== FINAL CERT ===== */
+  .cert{
+    text-align:center;background:linear-gradient(160deg,color-mix(in srgb,var(--accent) 16%,var(--panel)),var(--panel));
+    border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));border-radius:20px;
+    padding:46px 32px;box-shadow:0 30px 80px -40px var(--accent);
+    animation:fadeUp .5s ease;position:relative;overflow:hidden;
+  }
+  .keys{font-size:56px;margin-bottom:16px;line-height:1;animation:pop .6s ease .2s both;display:inline-block}
+  .cert h2{font-size:clamp(26px,4.5vw,40px);font-weight:800;letter-spacing:-1.3px;line-height:1.1;margin-bottom:12px}
+  .cert h2 em{font-style:normal;color:var(--accent)}
+  .cert p{color:#c9d3e2;font-size:15px;line-height:1.7;max-width:540px;margin:0 auto 26px}
+  .cert-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:580px;margin:0 auto 26px}
+  .cert-stat{background:#0f141c99;border:1px solid var(--line);border-radius:12px;padding:15px}
+  .cert-stat h6{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);
+    font-weight:800;margin-bottom:6px}
+  .cert-stat b{font-size:21px;font-weight:800;letter-spacing:-.5px}
+
+  .score-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;font-size:12px}
+  .score-row span:first-child{width:56px;font-weight:700;letter-spacing:.5px}
+  .score-track{flex:1;height:7px;background:#0f141c;border-radius:99px;overflow:hidden}
+  .score-track i{display:block;height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+  .score-val{width:20px;text-align:right;color:var(--muted);font-weight:600}
+
+  .actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+  .center{text-align:center}
+
+  .float-xp{
+    position:fixed;font-size:22px;font-weight:800;color:var(--accent);
+    pointer-events:none;z-index:999;animation:floatUp 1.1s ease-out forwards;
+    text-shadow:0 0 20px var(--accent);
+  }
+  .confetti{position:fixed;width:9px;height:14px;top:-20px;z-index:998;pointer-events:none;
+    animation:confettiFall linear forwards}
+
+  /* ===== ADDED: nav, coach, track, manager, drill ===== */
+  .viewnav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 auto 30px;max-width:640px}
+  .gate-banner{
+    max-width:640px;margin:0 auto 14px;padding:13px 17px;border-radius:12px;font-size:13.5px;line-height:1.55;
+    background:color-mix(in srgb,var(--red) 9%,var(--panel));border:1px solid color-mix(in srgb,var(--red) 35%,var(--line));
+  }
+  .gate-banner.clear{background:color-mix(in srgb,var(--green) 9%,var(--panel));border-color:color-mix(in srgb,var(--green) 35%,var(--line))}
+  .coach-panel{
+    max-width:640px;margin:0 auto 30px;background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius);padding:18px 20px;
+  }
+  .coach-panel h5{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:10px}
+  .coach-panel p{font-size:13.5px;line-height:1.6;color:#c9d3e2;margin-bottom:8px}
+  .coach-panel p:last-child{margin-bottom:0}
+  .coach-item{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+  .coach-item:first-of-type{border-top:none}
+  .coach-item b{color:var(--text)}
+  .coach-item span{color:var(--muted);text-align:right}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:800;letter-spacing:.8px;
+    text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--muted)}
+  .chip i{width:7px;height:7px;border-radius:50%;background:var(--cc,#888);display:block}
+  .check-block{margin-bottom:26px}
+  .check-block .q-text{font-size:17px;margin-bottom:14px}
+  .day-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px}
+  .day-card.locked{opacity:.45}
+  .day-card.achieved{border-color:color-mix(in srgb,var(--green) 40%,var(--line))}
+  .day-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .day-head h4{font-size:14.5px;font-weight:800}
+  .state-tag{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);flex:0 0 auto}
+  .state-tag.achieved{color:var(--green);border-color:color-mix(in srgb,var(--green) 45%,var(--line))}
+  .state-tag.training{color:var(--accent);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+  .day-items{list-style:none}
+  .day-items li{font-size:13.5px;color:#c9d3e2;padding:5px 0 5px 24px;position:relative;line-height:1.5}
+  .day-items li::before{content:'○';position:absolute;left:2px;color:var(--muted)}
+  .day-items li.done{color:var(--muted)}
+  .day-items li.done::before{content:'✓';color:var(--green);font-weight:900}
+  table.mgr{width:100%;border-collapse:collapse;font-size:13px}
+  table.mgr th,table.mgr td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.mgr th{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:800}
+  table.mgr td{color:#c9d3e2}
+  .verdict{border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;text-align:center;border:1px solid var(--line);background:var(--panel)}
+  .verdict h3{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+  .verdict p{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .verdict.ready{border-color:color-mix(in srgb,var(--green) 45%,var(--line));background:color-mix(in srgb,var(--green) 8%,var(--panel))}
+  .drill-stage{
+    border:1px dashed color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:var(--radius);
+    padding:26px 22px;text-align:center;margin-bottom:14px;background:#0f141c66;user-select:none;
+  }
+  .drill-q{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:14px;min-height:27px}
+  .drill-timer{font-size:52px;font-weight:800;letter-spacing:-2px;line-height:1;font-variant-numeric:tabular-nums}
+  .drill-sub{font-size:12.5px;color:var(--muted);margin-top:10px;line-height:1.6}
+  .drill-reps{display:flex;gap:8px;justify-content:center;margin-top:16px}
+  .drill-reps i{width:38px;height:8px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line)}
+  .drill-reps i.hit{background:var(--green);border-color:transparent}
+  .lab-progress{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px}
+  .lab-progress i{flex:1;min-width:24px;height:8px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line)}
+  .lab-progress i.hit{background:var(--accent);border-color:transparent}
+
+  @media (max-width:720px){
+    .split{grid-template-columns:1fr}
+    .cert-stats{grid-template-columns:1fr}
+    .brand span{display:none}
+    .node-grid{grid-template-columns:1fr}
+    .ring em{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <h1>Talk Less, Make More</h1>
+        <span>Sales Academy</span>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="ring" id="ring">
+        <i></i>
+        <span id="ringName">—</span>
+        <em id="ringProg">0%</em>
+      </div>
+      <button class="btn btn-ghost" id="mgrBtn" style="display:none">Manager</button>
+      <button class="btn btn-ghost" id="resetBtn" style="display:none">Restart</button>
+    </div>
+  </header>
+  <main id="view"></main>
+</div>
+
+<script>
+/* =====================================================================
+   PROFILES — verbatim from the original build record
+   ===================================================================== */
+const PROFILE_ORDER = ['yellow','green','blue','red'];
+const PROFILES = {
+  yellow:{ key:'yellow', name:'Yellow', role:'The Analyst', color:'var(--yellow)',
+    tagline:'“Show me the numbers.”',
+    summary:'Driven by accuracy, logic, and proof. Buys when the evidence is airtight.',
+    buysOn:'Data, benchmarks, comparisons, documented process',
+    hates:'Hype, vague claims, pressure tactics',
+    coach:'Lead with the data — then stop talking. Give the comparison sheet and the reference call. Silence is your friend.' },
+  green:{ key:'green', name:'Green', role:'The Connector', color:'var(--green)',
+    tagline:'“Do I actually like working with you?”',
+    summary:'Driven by people, energy, and story. Buys when they trust the human more than the deck.',
+    buysOn:'Rapport, story, enthusiasm, peer proof',
+    hates:'Cold scripts, dry data dumps, robotic follow-up',
+    coach:'Swap features for stories. Match their energy, use their name, make the next step feel light.' },
+  blue:{ key:'blue', name:'Blue', role:'The Leader', color:'var(--blue)',
+    tagline:'“What’s the big picture — and what’s in it for me?”',
+    summary:'Driven by vision, status, and control. Buys when the decision makes them look decisive.',
+    buysOn:'Vision, authority, momentum, advantage',
+    hates:'Being micromanaged, granular detail, hedging',
+    coach:'Speak in outcomes, not features. Give one clear decision, not a menu. Be brief, be confident, be gone.' },
+  red:{ key:'red', name:'Red', role:'The Bottom Line', color:'var(--red)',
+    tagline:'“What is this worth to me, and how fast?”',
+    summary:'Driven by ROI, speed, and results. Buys the moment the math is obvious.',
+    buysOn:'ROI, payback, speed, competitive edge',
+    hates:'Small talk, long decks, delays, vague pricing',
+    coach:'Lead with the number. State the ROI, the payback window, and the cost of waiting — then ask for the decision.' }
+};
+
+/* =====================================================================
+   ASSESSMENT — Q1–Q4 verbatim; Q5 stem + yellow/green verbatim,
+   blue/red completed in style; Q6–Q8 authored in identical style.
+   ===================================================================== */
+const QUESTIONS = [
+  { text:'A customer says, “I need to think about it.” Your first instinct is to…', options:[
+    {t:'yellow',label:'Ask exactly which detail they still need to review.'},
+    {t:'green', label:'Lighten the moment and keep the rapport alive.'},
+    {t:'blue',  label:'Take control and reframe around the bigger picture.'},
+    {t:'red',   label:'Quantify what waiting actually costs them per month.'}]},
+  { text:'Your ideal customer conversation runs on…', options:[
+    {t:'yellow',label:'A tight agenda with specs, comparisons, and a clear next step.'},
+    {t:'green', label:'Storytelling, laughter, and genuine human connection.'},
+    {t:'blue',  label:'Big-picture strategy with the real decision-maker in the room.'},
+    {t:'red',   label:'Hard numbers, payment math, and a signed next step.'}]},
+  { text:'What drains you fastest on the lot?', options:[
+    {t:'yellow',label:'Sloppy claims nobody can verify.'},
+    {t:'green', label:'Cold, robotic scripting with zero personality.'},
+    {t:'blue',  label:'Being micromanaged with no authority to decide.'},
+    {t:'red',   label:'Wasted minutes that lead nowhere.'}]},
+  { text:'How do you prep for a big delivery?', options:[
+    {t:'yellow',label:'Study the paperwork and confirm every detail twice.'},
+    {t:'green', label:'Plan how to make the moment feel special for them.'},
+    {t:'blue',  label:'Map who else needs to be impressed by this.'},
+    {t:'red',   label:'Calculate the referral and repeat-business potential.'}]},
+  { text:'A customer goes quiet for a week. You…', options:[
+    {t:'yellow',label:'Send a relevant comparison or spec sheet.'},
+    {t:'green', label:'Send a light, personal check-in they’ll actually smile at.'},
+    {t:'blue',  label:'Send one clear reason to re-engage — and one decision to make.'},
+    {t:'red',   label:'Put a number on what another quiet week costs them.'}]},
+  { text:'A deal dies at the desk. Your first move is to…', options:[
+    {t:'yellow',label:'Rebuild the numbers and find exactly where it broke.'},
+    {t:'green', label:'Call the customer, own it, and keep the relationship warm.'},
+    {t:'blue',  label:'Get a decision-maker back in front of them, fast.'},
+    {t:'red',   label:'Find the quickest honest path back to a yes today.'}]},
+  { text:'Your follow-up game is built on…', options:[
+    {t:'yellow',label:'A documented system — every promise logged, every date kept.'},
+    {t:'green', label:'Remembering people — kids’ names, birthdays, the dog.'},
+    {t:'blue',  label:'Making every customer feel like your most important account.'},
+    {t:'red',   label:'Speed — first to call back, first to solve it.'}]},
+  { text:'You know a presentation landed when…', options:[
+    {t:'yellow',label:'They start asking detailed questions about the data.'},
+    {t:'green', label:'They’re laughing, relaxed, and using your name.'},
+    {t:'blue',  label:'They’re picturing themselves already owning it.'},
+    {t:'red',   label:'They ask what they need to sign — and how fast.'}]}
+];
+
+/* =====================================================================
+   LESSONS — bodies authored in the original voice around recorded facts;
+   every check is 3 questions, pass at 80%.
+   ===================================================================== */
+const LESSONS = {
+'1.1':{ body:`
+  <div class="panel"><h3>You can't sell what you can't explain</h3>
+  <p>Every family on the lot exists for a reason. The compact is for the commuter counting fuel and parking space. The midsize SUV is for the family that outgrew the sedan. The truck is a tool that also happens to carry people. The performance model is for the driver who wants to <b>feel</b> something on the way to work.</p>
+  <p>Your first job is not memorizing specs. It's learning what each family is <b>FOR</b> — the job it does in a customer's life. Specs get looked up. Purpose has to live in you.</p></div>
+  <div class="callout"><h5>The Lot Walk</h5><p>Walk the lot twice. First pass: what each vehicle <b>is</b>. Second pass: who it's <b>for</b> and what problem it solves. If you can't say a car's purpose in one sentence, you don't know it yet.</p></div>
+  <div class="panel"><h3>How this pays you</h3><p>When a customer describes their life, the right vehicle should light up in your head before they finish the sentence. That's not talent. That's the lot walk, done daily, until the lineup is a map you carry.</p></div>`,
+  check:[
+   {q:'What is each model family really selling?',fb:'Purpose first. Specs can be looked up — what a vehicle is FOR has to live in you.',options:[
+     {label:'Its spec sheet and horsepower numbers'},{label:'What it’s FOR — the job it does in the customer’s life',ok:1},{label:'Its discount this month'}]},
+   {q:'The lot-walk rule from this lesson:',fb:'Twice. Once for what it is, once for who it’s for.',options:[
+     {label:'Walk it once, fast, before your shift',ok:0},{label:'Only walk the rows you like selling'},{label:'Walk it twice — what it is, then who it’s for',ok:1}]},
+   {q:'A customer says “just looking.” Your lineup knowledge lets you…',fb:'One smart question about the job the vehicle has to do beats ten spec facts.',options:[
+     {label:'Ask one smart question about what the vehicle needs to do for them',ok:1},{label:'Recite the trim levels until something sticks'},{label:'Walk away and wait for a serious buyer'}]}
+  ]},
+'1.2':{ body:`
+  <div class="panel"><h3>Base, mid, top — and why people climb</h3>
+  <p>Every model comes in steps. Base gets you moving. Mid adds the things people feel every day. Top adds the things people didn't know they wanted until they touched them. Nobody climbs a trim for a brochure. They climb for three things:</p>
+  <ul><li><b>Safety tech</b> — the features that protect their family.</li><li><b>Comfort</b> — the seat, the quiet, the ride they live in daily.</li><li><b>Connectivity</b> — the phone, the screen, the car that feels current.</li></ul></div>
+  <div class="split"><div class="good"><h5>Do</h5><p>Put them in it. Let them sit in the base, then the mid. Let their hands make the argument.</p></div>
+  <div class="bad"><h5>Don't</h5><p>Apologize for the higher trim's price before they've felt its value. You just sold against yourself.</p></div></div>
+  <div class="callout"><h5>The Trim Walk</h5><p>Your job is a guided comparison, not a price reveal. <b>Difference first, dollars second</b> — always in that order.</p></div>`,
+  check:[
+   {q:'What actually moves a customer up a trim?',fb:'Safety tech, comfort, and connectivity — things they can feel, not read.',options:[
+     {label:'A bigger discount on the base model'},{label:'Safety tech, comfort, and connectivity they can feel',ok:1},{label:'Talking faster so they can’t compare'}]},
+   {q:'On a trim walk, the strongest move is to…',fb:'Hands make the argument. Sit them in both and let the difference speak.',options:[
+     {label:'Read both window stickers aloud'},{label:'Let them sit in each trim and feel the difference themselves',ok:1},{label:'Skip the base so they never see the cheaper one'}]},
+   {q:'Before showing the top trim’s value, never…',fb:'Apologizing for price first sells against yourself.',options:[
+     {label:'Apologize for its price',ok:1},{label:'Let them touch it'},{label:'Compare it to the base'}]}
+  ]},
+'1.3':{ body:`
+  <div class="panel"><h3>The only formula you need this week</h3>
+  <p><span class="accent">“It has [feature] — which means you can [benefit].”</span> Features are what the factory installed. Benefits are what the customer lives with. Nobody buys blind-spot monitoring. They buy changing lanes on the highway without the twist-and-pray.</p>
+  <ul><li><b>Heated seats</b> — which means you can leave the house warm on a January morning.</li>
+  <li><b>Blind-spot monitoring</b> — which means you can merge without guessing.</li>
+  <li><b>Third row</b> — which means you can take the whole team in one car.</li>
+  <li><b>Adaptive cruise</b> — which means the car holds the gap in stop-and-go traffic for you.</li></ul></div>
+  <div class="split"><div class="bad"><h5>Feature dump</h5><p>“It’s got a 2.0 turbo, 8-speed, 273 pound-feet…” Their eyes glaze. You sound like a manual.</p></div>
+  <div class="good"><h5>Benefit talk</h5><p>“…which means you can pass on the highway without downshifting twice and praying.” Now they’re picturing their drive.</p></div></div>
+  <div class="callout"><h5>Drill</h5><p>Take any feature on any car on the lot. If you can't finish the sentence “…which means you can…”, you don't know that feature yet.</p></div>`,
+  check:[
+   {q:'The Feature → Benefit formula is:',fb:'“It has X — which means you can Y.” Every time, no exceptions.',options:[
+     {label:'“It costs X — but it’s worth it.”'},{label:'“It has X — which means you can Y.”',ok:1},{label:'“Everybody’s buying X this year.”'}]},
+   {q:'“It has blind-spot monitoring” done right becomes…',fb:'Translate the feature into the moment it saves them.',options:[
+     {label:'“…which means you can change lanes without guessing.”',ok:1},{label:'“…which is standard on most trims now.”'},{label:'“…which adds about $400 to the sticker.”'}]},
+   {q:'Why do benefits outsell features?',fb:'People buy what it does for their life, not what it is.',options:[
+     {label:'Features confuse people and benefits are shorter'},{label:'People buy what it does for them, not what it is',ok:1},{label:'Benefits let you skip the test drive'}]}
+  ]},
+'1.4':{ body:`
+  <div class="panel"><h3>Four levers move every payment</h3>
+  <p><b>Price. Rate. Term. Down payment.</b> That's the whole machine. When a payment surprises a customer, one of those four levers is doing it — and your job is to know which one, out loud, in plain language.</p>
+  <p>Order matters at the desk: <b>vehicle first, trade second, numbers last.</b> A payment quoted on the wrong car is just an expensive misunderstanding.</p></div>
+  <div class="callout"><h5>The $30 Rule</h5><p><b>$30 a month is $360 a year</b> — and $1,800 across a 60-month loan. Small monthly differences are big money wearing a disguise. Say the yearly number out loud; it changes the conversation.</p></div>
+  <div class="panel"><h3>The cost of “thinking it over”</h3><p>While a customer thinks for a week, their trade is depreciating and the market is moving. A trade worth a number today can drop <b>$500</b> while they think. That's not a pressure line — it's arithmetic, and honest arithmetic is allowed.</p></div>`,
+  check:[
+   {q:'$30 a month equals how much over one year?',fb:'$30 × 12 = $360. Always translate monthly into yearly.',options:[
+     {label:'$300'},{label:'$360',ok:1},{label:'$3,600'}]},
+   {q:'The correct order at the desk is:',fb:'Vehicle → trade → numbers. A payment on the wrong car is a misunderstanding.',options:[
+     {label:'Numbers → vehicle → trade'},{label:'Trade → numbers → vehicle'},{label:'Vehicle → trade → numbers',ok:1}]},
+   {q:'Why is “I’ll think about it for a week” expensive for the customer?',fb:'Their trade can drop around $500 while they think — depreciation doesn’t pause.',options:[
+     {label:'It isn’t — waiting is always free'},{label:'Their trade keeps depreciating and can drop about $500',ok:1},{label:'The dealership raises prices on weekends'}]}
+  ]},
+'2.1':{ body:`
+  <div class="panel"><h3>The approach is not a pitch</h3>
+  <p>The first 30 seconds have one job: make the customer glad a human walked over. Not sold. Not qualified. <b>Glad.</b> Everything you will ever earn from this person is downstream of how these seconds feel.</p>
+  <p>Slow your walk. Smile before you speak. Open with something warm and weightless, then give them air. A customer who feels hunted spends the whole visit defending themselves instead of shopping.</p></div>
+  <div class="split"><div class="good"><h5>Sounds like</h5><p>“Hey, welcome in. Look around as long as you like — if a question pops up, I’m right here.” Then you step back and mean it.</p></div>
+  <div class="bad"><h5>Not this</h5><p>“What brings you in today, looking to buy or just browsing, can I get you into something?” Three questions, zero breath, one fleeing customer.</p></div></div>
+  <div class="callout"><h5>Remember</h5><p>People forget your opener. They never forget whether they felt <b>pressure or permission</b>. Sell permission first.</p></div>`,
+  check:[
+   {q:'The first 30 seconds exist to…',fb:'Connection before everything. Glad a human walked over — that’s the whole job.',options:[
+     {label:'Qualify their budget and timeline'},{label:'Make them glad a human walked over',ok:1},{label:'Get them into a car immediately'}]},
+   {q:'The strongest opening move is:',fb:'Warm greeting, low pressure, then space — and mean it.',options:[
+     {label:'A warm greeting plus room to breathe',ok:1},{label:'Three quick questions to sort them out'},{label:'Leading with this month’s special'}]},
+   {q:'They say “just looking.” You say…',fb:'Welcome it. “Just looking” is how every buyer starts.',options:[
+     {label:'“Everyone says that — what are you really after?”'},{label:'“Perfect, that’s what the lot’s for. Holler if a question pops up.”',ok:1},{label:'“Alright,” and watch them from the window'}]}
+  ]},
+'2.2':{ body:`
+  <div class="panel"><h3>Five questions that open a life</h3>
+  <p>Discovery is not an interrogation. It's five honest questions, asked like a person, in an order that lets the customer tell you how to sell them their next vehicle:</p>
+  <ul><li>“What are you driving now — and what do you love about it?”</li>
+  <li>“What’s it not doing for you anymore?”</li>
+  <li>“Who’s riding with you most days?”</li>
+  <li>“What does a normal week look like for this vehicle?”</li>
+  <li>“If the next one were perfect, what would it do that this one can’t?”</li></ul>
+  <p>Write down what matters — kids' names, the dog, the commute. People buy from people who <b>remember</b>.</p></div>
+  <div class="callout"><h5>The 90-Second Rule</h5><p>Talk longer than <b>90 seconds</b> straight and you've stopped selling — you're performing. Discovery is measured in how much <b>they</b> say, not you.</p></div>`,
+  check:[
+   {q:'The 90-second rule says:',fb:'Past 90 seconds of straight talking, you’ve stopped selling.',options:[
+     {label:'Every answer you give should take 90 seconds'},{label:'Talk 90+ seconds straight and you’ve stopped selling',ok:1},{label:'Spend exactly 90 seconds on the greeting'}]},
+   {q:'The five discovery questions are really asking…',fb:'The life comes first. The vehicle has to fit inside it.',options:[
+     {label:'What their life looks like, so the vehicle can fit it',ok:1},{label:'How much they can spend, five different ways'},{label:'Whether they’re buying today'}]},
+   {q:'Why write down family details?',fb:'Remembering is the rapport. It’s also the follow-up that lands.',options:[
+     {label:'So the desk can price the trade better'},{label:'People buy from people who remember them',ok:1},{label:'It fills time while numbers run'}]}
+  ]},
+'2.3':{ body:`
+  <div class="panel"><h3>Every customer is buying one of four things</h3>
+  <p><b>Proof. Relationship. Status. Speed.</b> You already know these — they're the four colors. Your assessment told you which one <b>you</b> sell from. This lesson is about hearing which one <b>they</b> buy from:</p>
+  <ul><li><b>Yellow</b> asks for specs, comparisons, documentation. Bring data, then stop talking.</li>
+  <li><b>Green</b> lights up at stories and people. Bring warmth and names.</li>
+  <li><b>Blue</b> talks outcomes and image. Bring the big picture and one clear decision.</li>
+  <li><b>Red</b> asks what it costs and how fast. Bring the number and the clock.</li></ul></div>
+  <div class="callout"><h5>The Trap</h5><p>Amateurs sell the way <b>they</b> like to buy. Professionals read the person across from them and match <b>that</b> color. Your color is your home base — not your script.</p></div>`,
+  check:[
+   {q:'A customer asking for spec sheets and comparisons is buying…',fb:'Proof. That’s Yellow — bring data, then stop talking.',options:[
+     {label:'Proof',ok:1},{label:'Relationship'},{label:'Speed'}]},
+   {q:'“How fast can we get this done?” is the sound of…',fb:'Red. ROI and the clock — lead with the number.',options:[
+     {label:'Blue — status'},{label:'Green — relationship'},{label:'Red — speed and results',ok:1}]},
+   {q:'The core skill of this lesson is:',fb:'Match their color, not yours.',options:[
+     {label:'Selling every customer your own color, harder'},{label:'Reading their color and matching your approach to it',ok:1},{label:'Naming their color out loud so they feel seen'}]}
+  ]},
+'4.1':{ body:`
+  <div class="panel"><h3>The trade is not a car. It's their history.</h3>
+  <p>That vehicle carried their kids, their moves, their worst year and their best vacation. When you appraise it, you are walking through someone's memories with a clipboard. <b>Respect is a pricing strategy</b>: a customer who feels their trade was honored negotiates everything else easier.</p>
+  <p>Walk the trade <b>with</b> them when you can. Note the good out loud — the records in the glovebox, the tires, the care. The number will be what the market says. How you deliver it decides whether they hear it.</p></div>
+  <div class="callout"><h5>The Tax-Advantage Line</h5><p>“In most states, you only pay sales tax on the <b>difference</b> between your new vehicle and your trade — so your trade lowers the taxable amount. That’s real money a private sale doesn’t give you.” True, simple, and it reframes the trade as an asset, not a deduction from their worth.</p></div>`,
+  check:[
+   {q:'Why is the trade emotional?',fb:'It’s their history, not just a vehicle. Handle it like it matters — because to them it does.',options:[
+     {label:'It isn’t — it’s just metal and mileage'},{label:'It carries their history — kids, moves, years of life',ok:1},{label:'Because customers always overvalue it'}]},
+   {q:'The tax-advantage line explains that…',fb:'Tax on the difference only — real money a private sale doesn’t give them.',options:[
+     {label:'Trades are tax-free gifts to the dealer'},{label:'They pay tax only on the difference, so the trade lowers the tax bill',ok:1},{label:'Trading in always beats the market price'}]},
+   {q:'On the trade walk, never…',fb:'Trashing their car teaches them to defend it — and to distrust your number.',options:[
+     {label:'Trash their car to justify a low number',ok:1},{label:'Note the good things out loud'},{label:'Walk it with them when possible'}]}
+  ]},
+'4.2':{ body:`
+  <div class="panel"><h3>Four boxes. One conversation at a time.</h3>
+  <p>The four-square has four boxes: <b>vehicle price, trade value, cash down, monthly payment.</b> Every desk negotiation in America happens inside those four squares — the discipline is in the order.</p>
+  <p>The rule is absolute: <b>one box at a time. Never negotiate two boxes at once.</b> The moment price and payment and trade are all moving together, nobody knows what was agreed, the customer feels played, and the deal dies of confusion.</p></div>
+  <div class="callout"><h5>Control the order</h5><p>The customer's eyes will live in the payment box. Yours shouldn't — not until price and trade are settled, in writing, one at a time. Write numbers down. Paper remembers what talk forgets.</p></div>`,
+  check:[
+   {q:'The four-square rule is:',fb:'One box at a time. Never two. No exceptions.',options:[
+     {label:'Settle the payment box first, always'},{label:'Negotiate whichever box the customer shouts about'},{label:'One box at a time — never negotiate two at once',ok:1}]},
+   {q:'Which box do the customer’s eyes live in?',fb:'Payment. Which is exactly why you don’t start there.',options:[
+     {label:'Monthly payment',ok:1},{label:'Trade value'},{label:'Cash down'}]},
+   {q:'Why does one-at-a-time work?',fb:'Moving everything at once breeds confusion and kills trust.',options:[
+     {label:'It makes the deal take longer, which builds value'},{label:'Two-box talks tangle the numbers and kill trust',ok:1},{label:'It hides the price until the end'}]}
+  ]},
+'4.3':{ body:`
+  <div class="panel"><h3>Rate, term, and the honest math</h3>
+  <p>A point of rate is not abstract. On <b>$30,000 over 60 months, 1% is about $15 a month — and $900+ across the loan.</b> When a customer fights for a point, they're fighting for real money. Respect the fight; run the numbers where they can see them.</p>
+  <p>Term is the quiet lever. Stretching from 60 to 84 months drops the payment and raises the total cost. Sometimes that's the right trade for a family's budget — and sometimes it's a trap.</p></div>
+  <div class="callout"><h5>Disclose It Out Loud</h5><p>The honest desk <b>says the trade-off out loud</b>: “Longer term, lower payment, more total interest. Your call — here’s both.” Desks that hide it win a deal and lose the customer, the referral, and the repeat. This house wins on trust that compounds.</p></div>`,
+  check:[
+   {q:'On $30k over 60 months, 1% of rate is worth about…',fb:'≈ $15/month, $900+ over the loan. Small rate, real money.',options:[
+     {label:'$1.50 a month — basically nothing'},{label:'$15 a month, $900+ over the loan',ok:1},{label:'$150 a month'}]},
+   {q:'Stretching the term does what?',fb:'Lower payment, higher total cost — and the honest desk says so out loud.',options:[
+     {label:'Lowers the payment and the total cost'},{label:'Lowers the payment but raises the total cost — disclose it',ok:1},{label:'Has no effect anyone can feel'}]},
+   {q:'Why disclose the term trade-off out loud?',fb:'Trust brings them back — and brings their people with them.',options:[
+     {label:'It’s legally safer to mumble it at signing'},{label:'Trust wins the repeat business and the referrals',ok:1},{label:'It makes the payment look smaller'}]}
+  ]},
+'4.4':{ body:`
+  <div class="panel"><h3>The ask — and then nothing</h3>
+  <p>Everything you have learned funnels into one sentence, said plainly, at the desk, when the numbers are right:</p>
+  <p><span class="accent">“If we can make these numbers work, are you ready to drive it home today?”</span></p>
+  <p>Then you do the hardest thing in sales: <b>you stop talking.</b> The question needs room to work. Every word you add after it is you negotiating against yourself — explaining, softening, rescuing them from a decision they were about to make.</p></div>
+  <div class="callout"><h5>The 5-Second Rule</h5><p>After the ask, count five full seconds in your head before you even think about speaking. The silence feels eternal to you and like respect to them. <b>The first one who talks after the ask loses ground.</b> Below, the Silence Drill trains exactly this muscle — three holds: 5, 10, and 15 seconds.</p></div>`,
+  check:[
+   {q:'After the closing question, you…',fb:'Stop talking. The question needs room to work.',options:[
+     {label:'Add two more reasons to say yes, quickly'},{label:'Stop talking and let the silence work',ok:1},{label:'Ask it again, friendlier'}]},
+   {q:'The 5-second rule means…',fb:'Five full seconds. Eternal to you, respect to them.',options:[
+     {label:'Wait at least five seconds before speaking again',ok:1},{label:'Ask five questions in a row'},{label:'Give them five seconds to sign'}]},
+   {q:'Why does talking after the ask hurt?',fb:'You end up negotiating against yourself and shrinking the decision.',options:[
+     {label:'It doesn’t — enthusiasm is contagious'},{label:'You start rescuing them from a decision they were making',ok:1},{label:'It confuses the desk manager'}]}
+  ]},
+'5.1':{ body:`
+  <div class="panel"><h3>Delivery is a second sale — of the first one</h3>
+  <p>The paperwork is done and the temptation is to rush them out. Don't. Delivery is where buyer's remorse is killed and referrals are born. Slow down and <b>re-teach three features</b> — not any three: the three that sold them, the ones they'll brag about tonight.</p>
+  <ul><li><b>Pair their phone</b> before they leave. The car should know them already.</li>
+  <li><b>Set their seat and mirrors</b> with them in it. Physically making it theirs.</li>
+  <li><b>Show the one thing</b> they'll use on the drive home.</li></ul></div>
+  <div class="callout"><h5>Remember</h5><p>A customer who leaves <b>confident</b> tells people. A customer who leaves confused tells people too — a different story. Delivery decides which one.</p></div>`,
+  check:[
+   {q:'At delivery, you re-teach…',fb:'The three that sold them — the ones they’ll brag about tonight.',options:[
+     {label:'Every feature in the manual, alphabetically'},{label:'Three features — the ones that mattered to them',ok:1},{label:'Nothing; the sale is over'}]},
+   {q:'Pairing their phone and setting their seat does what?',fb:'It makes the car theirs before the wheels move.',options:[
+     {label:'Makes the car physically theirs before they leave',ok:1},{label:'Fills time while the car is washed'},{label:'Tests whether the electronics work'}]},
+   {q:'Delivery done right produces…',fb:'Confident customers refer. Confused ones warn.',options:[
+     {label:'Faster lot turnover'},{label:'Referrals and repeat business',ok:1},{label:'Fewer service visits somehow'}]}
+  ]},
+'5.2':{ body:`
+  <div class="panel"><h3>Hand them. Don't slide them.</h3>
+  <p>The keys are the physical weight of everything you've built together. So: <b>hand them the keys — never slide them across a desk.</b> Eye contact. Their name, said out loud. A real moment, held for one beat longer than feels necessary.</p>
+  <p>Then the photo. Ask permission, take it, and make sure they have it — that picture travels further than any ad you'll ever buy.</p></div>
+  <div class="callout"><h5>The Referral Seed</h5><p>Planted here, while the feeling is highest, in exactly these words: <span class="accent">“If this goes well for you, who’s the first person you’d tell?”</span> Not a pitch. A seed. You've earned the right to ask it — ask it.</p></div>`,
+  check:[
+   {q:'The keys are…',fb:'Handed. Eye contact, their name, a real moment.',options:[
+     {label:'Slid across the desk with the paperwork'},{label:'Left in the ignition for them to find'},{label:'Handed — never slid',ok:1}]},
+   {q:'The referral seed is planted…',fb:'At the keys moment, while the feeling is highest.',options:[
+     {label:'At the keys moment, while the feeling is highest',ok:1},{label:'In a follow-up email next week'},{label:'During the price negotiation, as leverage'}]},
+   {q:'The delivery photo matters because…',fb:'With permission, it marks the moment — and it travels.',options:[
+     {label:'The desk requires it for the file'},{label:'It marks the moment, and moments travel further than ads',ok:1},{label:'It proves the car left the lot'}]}
+  ]},
+'5.3':{ body:`
+  <div class="panel"><h3>The handshake is the beginning</h3>
+  <p>Everything ends with a handshake — and the handshake is not an ending. It's the close of the sale and the <b>opening of the relationship</b>: this person now has a car person. You. They should leave knowing your name, how to reach you, and that you will follow up — not to sell, to check in.</p>
+  <p>Do it right and this handshake repeats: their next car, their kid's first car, the neighbor they send your way at the keys moment for the rest of your career.</p></div>
+  <div class="callout"><h5>The Whole Academy In One Line</h5><p>Know the product. Read the person. Handle the moment. Honor the math. Deliver the feeling. <b>Talk less. Make more.</b></p></div>`,
+  check:[
+   {q:'The handshake means…',fb:'The sale closes; the relationship opens.',options:[
+     {label:'The relationship starts here',ok:1},{label:'The relationship ends here'},{label:'Time to find the next customer, fast'}]},
+   {q:'Before they leave, they should know…',fb:'Your name, your number, and that you’ll follow up to check in.',options:[
+     {label:'The service department’s hours only'},{label:'Your name, how to reach you, and that you’ll follow up',ok:1},{label:'That referrals pay a bounty'}]},
+   {q:'The sale is truly over when…',fb:'It isn’t. Service, follow-up, and referrals keep it alive.',options:[
+     {label:'The ink dries'},{label:'They drive off the lot'},{label:'It isn’t — follow-up and referrals keep it alive',ok:1}]}
+  ]}
+};
+
+/* =====================================================================
+   PHASES — structure verbatim from the record
+   ===================================================================== */
+const PHASES = [
+ {n:1,name:'Product Academy',icon:'🚗',color:'var(--yellow)',sub:'Know the product cold',nodes:[
+   {id:'1.1',title:'The Lineup',desc:'Families — and what each one is FOR.'},
+   {id:'1.2',title:'The Trim Walk',desc:'Safety tech, comfort, connectivity move people up.'},
+   {id:'1.3',title:'Feature → Benefit',desc:'“It has X — which means you can Y.”'},
+   {id:'1.4',title:'Payment Math',desc:'Price, rate, term, down. And the $30 rule.'}]},
+ {n:2,name:'Greeting & Discovery',icon:'👋',color:'var(--green)',sub:'Read the person',nodes:[
+   {id:'2.1',title:'First 30 Seconds',desc:'The approach is not a pitch.'},
+   {id:'2.2',title:'Needs Discovery',desc:'Five questions. The 90-second rule.'},
+   {id:'2.3',title:'Reading the Color',desc:'Proof, relationship, status, or speed?'}]},
+ {n:3,name:'The Objection Lab',icon:'🥊',color:'var(--red)',sub:'Handle the moment',lab:true,nodes:[
+   {id:'lab',title:'The Objection Lab',desc:'Ten objections. Role-play, rubric, coaching. Pass each at 80%.'}]},
+ {n:4,name:'The Desk & Numbers',icon:'🧮',color:'var(--blue)',sub:'Honor the math',nodes:[
+   {id:'4.1',title:'Trade-In Appraisal',desc:'The trade is emotional. Know the tax line.'},
+   {id:'4.2',title:'The Four-Square',desc:'One box at a time. Never two.'},
+   {id:'4.3',title:'Financing & Terms',desc:'1% on $30k/60mo ≈ $15/mo, $900+ over the loan.'},
+   {id:'4.4',title:'Asking for the Signature',desc:'Ask it. Then stop talking.'}]},
+ {n:5,name:'Delivery & Handoff',icon:'🔑',color:'var(--yellow)',sub:'Deliver the feeling',terminal:true,nodes:[
+   {id:'5.1',title:'Delivery Walkthrough',desc:'Re-teach three features. Pair their phone. Set their seat.'},
+   {id:'5.2',title:'Keys Moment',desc:'Hand them — don’t slide them. Plant the seed.'},
+   {id:'5.3',title:'The Handshake',desc:'The close of the sale. The opening of the relationship.'}]}
+];
+const UNITS = ['1.1','1.2','1.3','1.4','2.1','2.2','2.3','lab','4.1','4.2','4.3','4.4','5.1','5.2','5.3'];
+
+/* =====================================================================
+   OBJECTION LAB — ten objections. Recorded "do" lines drive the rubric's
+   pivot checkpoint; variants let the Adaptive Coach re-serve a miss in
+   fresh words. Rubric: acknowledge · pivot question · no price defense ·
+   no hype · next step. Pass = 80% (4 of 5).
+   ===================================================================== */
+const OBJECTIONS = [
+ {id:'price',name:'The Price Flinch',color:'red',
+  doLine:'Ask one question — “Compared to what?” — then be quiet and let them define the comparison.',
+  pivotKeys:['compared','relative to','against what','what are you comparing','versus'],
+  variants:[
+   '“Whoa. That’s way more than I expected to pay.”',
+   '“That price is a lot higher than I had in my head.”',
+   '“Hmm. That’s more than I wanted to spend, honestly.”']},
+ {id:'afford',name:'I Can’t Afford It',color:'yellow',
+  doLine:'Separate the price from the payment. Ask what fits the monthly budget, then work the levers — down, term, vehicle — in the open.',
+  pivotKeys:['budget','per month','monthly','payment','fit','comfortable','work for you','range'],
+  variants:[
+   '“I’m going to be straight with you — I just can’t afford it.”',
+   '“There’s no way I can swing that payment every month.”',
+   '“I like it, but my budget says no.”']},
+ {id:'stall1',name:'The Stall — Think About It',color:'green',
+  doLine:'Get specific: “What specifically do you want to think through?” A vague stall hides a real concern. Name it and it shrinks.',
+  pivotKeys:['specifically','specifically about','think through','part of it','which part','what part','concern'],
+  variants:[
+   '“I need to think about it.”',
+   '“We’re going to go home and think it over.”',
+   '“I don’t know… I just need to think about it.”']},
+ {id:'stall2',name:'The Stall — Sleep On It',color:'blue',
+  doLine:'Respect the pause, isolate the gap: “What changes between now and then?” If nothing changes, the only thing sleeping on it costs them is the trade value and the car.',
+  pivotKeys:['changes between','between now and then','different tomorrow','what changes','by then'],
+  variants:[
+   '“Let me sleep on it and I’ll come back this weekend.”',
+   '“We never buy anything the same day. House rule.”',
+   '“I want to sit with it overnight before I decide.”']},
+ {id:'gate1',name:'The Gatekeeper — Shopping For Two',color:'green',
+  doLine:'Honor the mission, include the decider: appreciate them gathering the facts, then make it easy for both to sit down together before numbers get real.',
+  pivotKeys:['both','together','join','the two of you','come in','meet','sit down','bring'],
+  variants:[
+   '“I’m really just looking for my husband — he’s the one who decides.”',
+   '“This will be my wife’s car. I’m just doing the legwork today.”',
+   '“I can’t say yes to anything — it’s my dad’s money.”']},
+ {id:'gate2',name:'The Gatekeeper — Just The Number',color:'yellow',
+  doLine:'A number carried secondhand carries no value with it. Offer to present it properly — to both of them, with the comparisons in hand.',
+  pivotKeys:['both','together','present','show you','walk through','appointment','meet','the two of you','fair shot'],
+  variants:[
+   '“Just give me your best price on paper and I’ll pass it along.”',
+   '“Write down your lowest number and I’ll take it to my partner.”',
+   '“I just need a figure to take back. That’s all I came for.”']},
+ {id:'skep1',name:'The Skeptic — All The Same',color:'green',
+  doLine:'Don’t argue the stereotype — out-behave it. Acknowledge it honestly, then let proof and other people’s experiences do the talking.',
+  pivotKeys:['show you','prove','reviews','customers','reference','hear you','fair','understand'],
+  variants:[
+   '“No offense, but you car salesmen are all the same.”',
+   '“I’ve bought cars before. I know how this goes.”',
+   '“Everyone I know says never trust the first number here.”']},
+ {id:'skep2',name:'The Skeptic — Read It Online',color:'yellow',
+  doLine:'Bring documentation, not opinions: service records, warranty terms in writing, and the data behind the claim they read.',
+  pivotKeys:['records','warranty','documented','data','show you','in writing','coverage','report'],
+  variants:[
+   '“I read online that these have transmission problems.”',
+   '“A forum said the real repair costs on this model are brutal.”',
+   '“Consumer sites say this one doesn’t hold its value.”']},
+ {id:'skep3',name:'The Skeptic — Cheaper Across Town',color:'red',
+  doLine:'Make the comparison honest: same trim, same equipment, same terms? Put both builds side by side in writing and let the numbers argue.',
+  pivotKeys:['same trim','same','compare','side by side','in writing','exactly','apples','out the door'],
+  variants:[
+   '“My buddy can get me the same truck cheaper across town.”',
+   '“The place by the highway quoted me less for this exact car.”',
+   '“I’ve got a lower offer in my pocket from another dealer.”']},
+ {id:'close',name:'The Close',color:'blue',
+  doLine:'Isolate the last concern and close on it: “Are you saying if we fix that, you’re ready?” Then — silence. Let them answer.',
+  pivotKeys:['if we fix','if we can','ready','saying that','if that','take care of that'],
+  variants:[
+   '“I mean… I like it. I just don’t know.”',
+   '“Everything looks fine. I’m just not sure about today.”',
+   '“It’s a big decision. I don’t want to rush it.”']}
+];
+
+/* =====================================================================
+   14-DAY TRACK — the five phases mapped across 14 days of achievements
+   ===================================================================== */
+const TRACK = [
+ {day:1, title:'Find Your Color', items:[{t:'Take the Color Assessment',k:'assess'},{t:'Pass 1.1 — The Lineup',k:'node',id:'1.1'}]},
+ {day:2, title:'Walk The Iron', items:[{t:'Pass 1.2 — The Trim Walk',k:'node',id:'1.2'}]},
+ {day:3, title:'Say It In Benefits', items:[{t:'Pass 1.3 — Feature → Benefit',k:'node',id:'1.3'}]},
+ {day:4, title:'Cleared To Touch A Customer', items:[{t:'Pass 1.4 — Payment Math (Product Academy complete)',k:'node',id:'1.4'}]},
+ {day:5, title:'The Human Doorway', items:[{t:'Pass 2.1 — First 30 Seconds',k:'node',id:'2.1'}]},
+ {day:6, title:'Ask, Then Listen', items:[{t:'Pass 2.2 — Needs Discovery',k:'node',id:'2.2'}]},
+ {day:7, title:'Read The Room', items:[{t:'Pass 2.3 — Reading the Color',k:'node',id:'2.3'}]},
+ {day:8, title:'First Blood In The Lab', items:[{t:'Handle The Price Flinch at standard',k:'lab',id:'price'},{t:'Handle I Can’t Afford It at standard',k:'lab',id:'afford'}]},
+ {day:9, title:'Stalls Don’t Scare You', items:[{t:'Handle The Stall — Think About It at standard',k:'lab',id:'stall1'},{t:'Handle The Stall — Sleep On It at standard',k:'lab',id:'stall2'}]},
+ {day:10,title:'Open The Gate', items:[{t:'Handle The Gatekeeper — Shopping For Two at standard',k:'lab',id:'gate1'},{t:'Handle The Gatekeeper — Just The Number at standard',k:'lab',id:'gate2'}]},
+ {day:11,title:'Proof Beats Opinions', items:[{t:'Handle The Skeptic — All The Same at standard',k:'lab',id:'skep1'},{t:'Handle The Skeptic — Read It Online at standard',k:'lab',id:'skep2'},{t:'Handle The Skeptic — Cheaper Across Town at standard',k:'lab',id:'skep3'}]},
+ {day:12,title:'Cleared To Talk Money', items:[{t:'Handle The Close at standard (Objection Lab complete)',k:'lab',id:'close'},{t:'Pass 4.1 — Trade-In Appraisal',k:'node',id:'4.1'}]},
+ {day:13,title:'The Desk', items:[{t:'Pass 4.2 — The Four-Square',k:'node',id:'4.2'},{t:'Pass 4.3 — Financing & Terms',k:'node',id:'4.3'},{t:'Pass 4.4 — Asking for the Signature',k:'node',id:'4.4'},{t:'Complete the Silence Drill (5s · 10s · 15s holds)',k:'drill'}]},
+ {day:14,title:'Floor-Ready', items:[{t:'Pass 5.1 — Delivery Walkthrough',k:'node',id:'5.1'},{t:'Pass 5.2 — Keys Moment',k:'node',id:'5.2'},{t:'Pass 5.3 — The Handshake → Certificate',k:'node',id:'5.3'}]}
+];
+
+/* =====================================================================
+   STATE — localStorage persistence
+   ===================================================================== */
+const SAVE_KEY = 'tlmm_academy_v1';
+function freshState(){ return { xp:0, profile:null, counts:null, nodes:{}, lab:{},
+  silence:{reps:0, done:false, best:0}, started:null, certDate:null }; }
+let S = loadState();
+function loadState(){
+  try{ const raw = localStorage.getItem(SAVE_KEY);
+    if(raw){ const p = JSON.parse(raw); const f = freshState();
+      return { xp:p.xp||0, profile:p.profile||null, counts:p.counts||null,
+        nodes:p.nodes||{}, lab:p.lab||{},
+        silence:Object.assign(f.silence, p.silence||{}),
+        started:p.started||null, certDate:p.certDate||null }; }
+  }catch(e){}
+  return freshState();
+}
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(S)); }catch(e){} }
+function todayStr(){ const d=new Date(); return d.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}); }
+
+/* ---------- progress helpers ---------- */
+function labObj(id){ if(!S.lab[id]) S.lab[id] = {tries:0, passes:0, best:0, seen:-1, last:0}; return S.lab[id]; }
+function labPassedCount(){ return OBJECTIONS.filter(o => labObj(o.id).best >= 80).length; }
+function unitPassed(id){
+  if(id === 'lab') return labPassedCount() >= OBJECTIONS.length;
+  return !!(S.nodes[id] && S.nodes[id].passed);
+}
+function unitUnlocked(idx){
+  if(!S.profile) return false;
+  for(let i=0;i<idx;i++) if(!unitPassed(UNITS[i])) return false;
+  return true;
+}
+function unitFraction(id){
+  if(unitPassed(id)) return 1;
+  if(id === 'lab') return labPassedCount() / OBJECTIONS.length;
+  return 0;
+}
+function overallPct(){
+  const sum = UNITS.reduce((a,id) => a + unitFraction(id), 0);
+  return Math.round(sum / UNITS.length * 100);
+}
+function achievementCount(){
+  let n = S.profile ? 1 : 0;
+  UNITS.forEach(id => { if(id!=='lab' && unitPassed(id)) n++; });
+  n += labPassedCount();
+  if(S.silence.done) n++;
+  return n;
+}
+const ACHIEVEMENT_TOTAL = 1 + (UNITS.length - 1) + OBJECTIONS.length + 1;
+function allDone(){ return UNITS.every(unitPassed); }
+function phaseDone(n){ return PHASES[n-1].nodes.every(nd => unitPassed(nd.id)); }
+function itemDone(it){
+  if(it.k === 'assess') return !!S.profile;
+  if(it.k === 'node') return unitPassed(it.id);
+  if(it.k === 'lab') return labObj(it.id).best >= 80;
+  if(it.k === 'drill') return S.silence.done;
+  return false;
+}
+function dayState(d){
+  const done = d.items.every(itemDone);
+  if(done) return 'achieved';
+  const prev = TRACK[TRACK.indexOf(d)-1];
+  if(d.day > 1 && !(prev && prev.items.every(itemDone))) return 'locked';
+  return d.items.some(itemDone) ? 'training' : 'training';
+}
+function nodeMeta(id){
+  for(const ph of PHASES){ const nd = ph.nodes.find(x => x.id === id); if(nd) return {ph, nd}; }
+  return null;
+}
+
+/* ---------- FX ---------- */
+function awardXP(n, ev){
+  S.xp += n; save();
+  const el = document.createElement('div');
+  el.className = 'float-xp'; el.textContent = '+' + n + ' XP';
+  let x = window.innerWidth/2 - 30, y = 140;
+  if(ev && ev.clientX){ x = ev.clientX - 30; y = ev.clientY - 10; }
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  document.body.appendChild(el); setTimeout(() => el.remove(), 1200);
+  updateChrome();
+}
+function confettiBurst(){
+  const colors = ['#f5c518','#2ecc71','#3d9be9','#e74c3c'];
+  for(let i=0;i<46;i++){
+    const c = document.createElement('div'); c.className = 'confetti';
+    c.style.left = Math.random()*100 + 'vw';
+    c.style.background = colors[i % 4];
+    c.style.animationDuration = (1.6 + Math.random()*1.8) + 's';
+    c.style.animationDelay = (Math.random()*0.5) + 's';
+    if(i % 3 === 0) c.style.borderRadius = '50%';
+    document.body.appendChild(c); setTimeout(() => c.remove(), 4200);
+  }
+}
+function setAccent(){
+  if(S.profile) document.documentElement.style.setProperty('--accent', PROFILES[S.profile].color);
+}
+function updateChrome(){
+  const ring = document.getElementById('ring');
+  if(S.profile){
+    ring.classList.add('on');
+    document.getElementById('ringName').textContent = PROFILES[S.profile].name + ' — ' + PROFILES[S.profile].role;
+    document.getElementById('ringProg').textContent = overallPct() + '%';
+    document.getElementById('resetBtn').style.display = '';
+    document.getElementById('mgrBtn').style.display = '';
+  }
+  setAccent();
+}
+const view = () => document.getElementById('view');
+function goTop(){ window.scrollTo({top:0}); }
+
+/* =====================================================================
+   HOME — curriculum map
+   ===================================================================== */
+function weakSpots(){
+  return OBJECTIONS
+    .map(o => ({o, st: labObj(o.id)}))
+    .filter(x => x.st.tries > 0 && x.st.best < 80)
+    .sort((a,b) => a.st.best - b.st.best);
+}
+function renderHome(){
+  stopDrill();
+  const v = view();
+  if(!S.profile){
+    v.innerHTML = `
+    <div class="home-head anim">
+      <span class="eyebrow">Sales Academy</span>
+      <h2>Talk Less. <em>Make More.</em></h2>
+      <p>Zero product knowledge to delivering keys and asking for the referral — in a strictly gated sequence. First, we find your color: the way you naturally sell, so the Academy can train the real you.</p>
+      <button class="btn btn-primary btn-lg" onclick="startAssessment(event)">Take the Color Assessment</button>
+    </div>
+    <div class="gate-banner anim anim-d1">🔒 <b>The gates are real.</b> You cannot touch a customer until you pass Product Academy. You cannot talk money until you pass the Objection Lab. Eight questions stand between you and the map.</div>`;
+    updateChrome(); goTop(); return;
+  }
+  const pct = overallPct();
+  const weak = weakSpots();
+  const untouched = OBJECTIONS.filter(o => labObj(o.id).tries === 0).length;
+  let coachHTML;
+  if(weak.length){
+    coachHTML = `<h5>🧠 Adaptive Coach — Weak Spots</h5>
+      <p>The Coach tracks every Lab rep. These objections are below the 80% standard, so they are weighted to come back — in fresh wording — until they hold:</p>` +
+      weak.map(x => `<div class="coach-item"><b>${x.o.name}</b><span>Best ${x.st.best}% · ${x.st.tries} rep${x.st.tries>1?'s':''} · re-serving</span></div>`).join('') +
+      `<div class="actions"><button class="btn btn-primary" onclick="openNode('lab', event)">Drill My Weak Spots</button></div>`;
+  } else if(labPassedCount() >= OBJECTIONS.length){
+    coachHTML = `<h5>🧠 Adaptive Coach</h5><p>Every objection is at standard. The Coach has nothing to re-serve — the Lab is yours. Reps remain open if you want to stay sharp.</p>`;
+  } else {
+    coachHTML = `<h5>🧠 Adaptive Coach</h5><p>The Coach is watching your Lab work${untouched < OBJECTIONS.length ? '' : ' — no reps logged yet'}. Miss an objection and it comes back in fresh wording until you hold it at 80%. Weak spots will appear here, with the reason they're being re-served.</p>`;
+  }
+  const p1 = phaseDone(1), labDone = unitPassed('lab');
+  v.innerHTML = `
+  <div class="home-head anim">
+    <span class="eyebrow">Sales Academy · ${PROFILES[S.profile].name} — ${PROFILES[S.profile].role}</span>
+    <h2>Talk Less. <em>Make More.</em></h2>
+    <p>${PROFILES[S.profile].tagline} The map is the same for everyone. The Coach makes the reps personal.</p>
+  </div>
+  <div class="xp-hero anim anim-d1">
+    <div class="xp-hero-top"><span>${S.xp} XP</span><span>${pct}% Complete</span></div>
+    <div class="xp-track"><i style="width:${pct}%"></i></div>
+  </div>
+  <div class="coach-panel anim anim-d1">${coachHTML}</div>
+  <div class="viewnav anim anim-d2">
+    <button class="btn btn-ghost" onclick="renderTrack()">📅 14-Day Floor-Ready Track</button>
+    <button class="btn btn-ghost" onclick="renderManager()">📊 Manager View</button>
+    ${allDone() ? '<button class="btn btn-primary" onclick="renderCertificate()">🎓 View Certificate</button>' : ''}
+  </div>
+  <div class="gate-banner ${p1 ? 'clear' : ''} anim anim-d2">${p1 ? '✓' : '🔒'} <b>Customer gate:</b> ${p1 ? 'Product Academy passed — you may touch a customer.' : 'You cannot touch a customer until you pass Product Academy.'}</div>
+  <div class="gate-banner ${labDone ? 'clear' : ''} anim anim-d2">${labDone ? '✓' : '🔒'} <b>Money gate:</b> ${labDone ? 'Objection Lab passed — you may talk money.' : 'You cannot talk money until you pass the Objection Lab.'}</div>
+  ` + PHASES.map(ph => {
+    const firstIdx = UNITS.indexOf(ph.nodes[0].id);
+    const open = unitUnlocked(firstIdx);
+    const doneCount = ph.nodes.filter(nd => unitPassed(nd.id)).length;
+    return `<section class="phase ${open ? 'open' : 'locked'}" style="--pc:${ph.color}">
+      <div class="phase-head">
+        <div class="phase-icon">${ph.icon}</div>
+        <div class="phase-titles"><h3>Phase ${ph.n} — ${ph.name}</h3><span>${ph.sub}</span></div>
+        <div class="phase-count">${doneCount}/${ph.nodes.length}</div>
+      </div>
+      <div class="node-grid">${ph.nodes.map(nd => {
+        const idx = UNITS.indexOf(nd.id);
+        const unlocked = unitUnlocked(idx);
+        const done = unitPassed(nd.id);
+        const isNext = unlocked && !done;
+        let kicker = 'Phase ' + ph.n + ' · ' + nd.id;
+        if(nd.id === 'lab') kicker += ' · ' + labPassedCount() + '/' + OBJECTIONS.length + ' at standard';
+        else if(S.nodes[nd.id] && S.nodes[nd.id].tries) kicker += ' · Best ' + S.nodes[nd.id].best + '%';
+        return `<button class="node ${done ? 'done' : ''} ${!unlocked ? 'locked' : ''} ${isNext ? 'active' : ''}"
+          ${unlocked ? `onclick="openNode('${nd.id}', event)"` : 'disabled'}>
+          <div class="node-kicker">${kicker}</div><h4>${nd.title}</h4><p>${nd.desc}</p></button>`;
+      }).join('')}</div>
+    </section>`;
+  }).join('');
+  updateChrome(); goTop();
+}
+
+/* =====================================================================
+   ASSESSMENT
+   ===================================================================== */
+let A = null;
+function startAssessment(){
+  A = { i:0, counts:{yellow:0, green:0, blue:0, red:0} };
+  renderAssessmentQ();
+}
+function renderAssessmentQ(){
+  const q = QUESTIONS[A.i];
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="progress"><i style="width:${A.i / QUESTIONS.length * 100}%"></i></div>
+  <div class="q-meta"><span>Color Assessment</span><span>Question ${A.i + 1} of ${QUESTIONS.length}</span></div>
+  <div class="q-text anim">${q.text}</div>
+  <div class="options anim anim-d1">
+    ${q.options.map((o,idx) => `<button class="opt" onclick="answerQuestion('${o.t}', event)">
+      <span class="opt-key">${'ABCD'[idx]}</span><span>${o.label}</span></button>`).join('')}
+  </div>`;
+  goTop();
+}
+function answerQuestion(t){
+  A.counts[t]++;
+  A.i++;
+  if(A.i < QUESTIONS.length){ renderAssessmentQ(); return; }
+  let best = PROFILE_ORDER[0];
+  PROFILE_ORDER.forEach(k => { if(A.counts[k] > A.counts[best]) best = k; });
+  S.profile = best; S.counts = A.counts;
+  if(!S.started) S.started = todayStr();
+  save(); renderReveal();
+}
+function renderReveal(){
+  const p = PROFILES[S.profile];
+  view().innerHTML = `
+  <div class="head anim">
+    <span class="eyebrow">Your Color</span>
+    <h2 style="color:${p.color}">${p.name} — ${p.role}</h2>
+    <p style="font-size:19px;color:var(--text);font-weight:600">${p.tagline}</p>
+    <p>${p.summary}</p>
+  </div>
+  <div class="panel anim anim-d1"><h3>How you scored</h3>
+    ${PROFILE_ORDER.map(k => { const c = S.counts[k] || 0; return `
+    <div class="score-row"><span style="color:${PROFILES[k].color}">${PROFILES[k].name.toUpperCase()}</span>
+      <div class="score-track"><i style="width:${c / QUESTIONS.length * 100}%;background:${PROFILES[k].color}"></i></div>
+      <span class="score-val">${c}</span></div>`; }).join('')}
+  </div>
+  <div class="split anim anim-d2">
+    <div class="good"><h5>Buys On</h5><p>${p.buysOn}</p></div>
+    <div class="bad"><h5>Hates</h5><p>${p.hates}</p></div>
+  </div>
+  <div class="callout anim anim-d3"><h5>Your Coaching Note</h5><p>${p.coach}</p></div>
+  <div class="center anim anim-d3">
+    <p style="color:var(--muted);font-size:13.5px;margin-bottom:16px">This is your home base — not your script. The Academy teaches you to read the other three.</p>
+    <button class="btn btn-primary btn-lg" onclick="renderHome()">Enter the Academy →</button>
+  </div>`;
+  updateChrome(); goTop();
+}
+
+/* =====================================================================
+   LESSON VIEW + CHECKS
+   ===================================================================== */
+let L = null;
+function openNode(id, ev){
+  if(id === 'lab') return openLab();
+  const idx = UNITS.indexOf(id);
+  if(!unitUnlocked(idx)) return;
+  stopDrill();
+  L = { id, answers:{} };
+  renderLesson(); goTop();
+}
+function renderLesson(){
+  const { ph, nd } = nodeMeta(L.id);
+  const lesson = LESSONS[L.id];
+  const rec = S.nodes[L.id];
+  const is44 = L.id === '4.4';
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="head anim">
+    <span class="eyebrow">Phase ${ph.n} — ${ph.name} · ${nd.id}</span>
+    <h2>${nd.title}</h2>
+    ${rec && rec.passed ? '<span class="chip" style="color:var(--green)">✓ Passed — Best ' + rec.best + '%</span>'
+      : rec && rec.tries ? '<span class="chip">In Training — Best ' + rec.best + '% · Standard is 80%</span>'
+      : '<span class="chip">Standard: pass the check at 80%</span>'}
+  </div>
+  <div class="anim anim-d1">${lesson.body}</div>
+  ${is44 ? drillHTML() : ''}
+  <div class="panel anim anim-d2"><h3>The Check — pass at 80%</h3>
+  ${lesson.check.map((q, qi) => `
+    <div class="check-block" id="cb-${qi}">
+      <div class="q-text">${qi + 1}. ${q.q}</div>
+      <div class="options">
+      ${q.options.map((o, oi) => `<button class="opt" id="opt-${qi}-${oi}" onclick="answerCheck(${qi}, ${oi}, event)">
+        <span class="opt-key">${'ABC'[oi]}</span><span>${o.label}</span></button>`).join('')}
+      </div>
+      <div class="fb" id="fb-${qi}" style="display:none"></div>
+    </div>`).join('')}
+  <div id="checkResult"></div>
+  </div>
+  <div class="actions"><button class="btn btn-ghost" onclick="renderHome()">← Back to map</button></div>`;
+  updateChrome();
+  if(is44) updateDrillUI();
+}
+function answerCheck(qi, oi, ev){
+  if(L.answers[qi] !== undefined) return;
+  L.answers[qi] = oi;
+  const q = LESSONS[L.id].check[qi];
+  const correct = !!q.options[oi].ok;
+  q.options.forEach((o, i) => {
+    const b = document.getElementById('opt-' + qi + '-' + i);
+    b.disabled = true;
+    if(o.ok) b.classList.add('correct');
+  });
+  const chosen = document.getElementById('opt-' + qi + '-' + oi);
+  if(!correct) chosen.classList.add('wrong');
+  const fb = document.getElementById('fb-' + qi);
+  fb.style.display = ''; fb.className = 'fb ' + (correct ? 'ok' : 'no');
+  fb.innerHTML = (correct ? '<b>Right.</b> ' : '<b>Not quite.</b> ') + q.fb;
+  if(Object.keys(L.answers).length === LESSONS[L.id].check.length) scoreCheck(ev);
+}
+function scoreCheck(ev){
+  const qs = LESSONS[L.id].check;
+  const right = qs.filter((q, qi) => q.options[L.answers[qi]].ok).length;
+  const pct = Math.round(right / qs.length * 100);
+  if(!S.nodes[L.id]) S.nodes[L.id] = {passed:false, best:0, tries:0};
+  const rec = S.nodes[L.id];
+  rec.tries++; rec.best = Math.max(rec.best, pct);
+  let msg = '', newly = false, xpAmt = 100;
+  if(L.id === '4.4'){
+    if(pct >= 80 && S.silence.done && !rec.passed){ rec.passed = true; newly = true; xpAmt = 150; }
+    msg = gate44Message(pct);
+  } else if(pct >= 80 && !rec.passed){
+    rec.passed = true; newly = true;
+  }
+  save(); updateChrome();
+  if(newly) awardXP(xpAmt, ev);
+  const needsDrill = L.id === '4.4' && !S.silence.done;
+  document.getElementById('checkResult').innerHTML = `
+   <div class="fb ${pct >= 80 ? 'ok' : 'no'}" style="margin-top:6px">
+     <div class="score-big">${pct}%</div>
+     <p style="margin-top:8px">${pct >= 80
+       ? (L.id === '4.4' ? msg : '<b>Standard met.</b> ' + (newly ? 'This node is passed and the next gate opens. +100 XP' : 'Already passed — this run is for sharpness.'))
+       : '<b>Below standard.</b> The check stays at 80% — re-read the lesson and run it again. The Academy doesn’t grade on a curve; it gates on readiness.'}</p>
+     <div class="actions">
+       <button class="btn btn-primary" onclick="renderHome()">Back to map</button>
+       ${pct < 80 ? `<button class="btn btn-ghost" onclick="openNode('${L.id}', event)">Retake the check</button>` : ''}
+       ${needsDrill && pct >= 80 ? '<button class="btn btn-ghost" onclick="document.getElementById(\'drillStage\').scrollIntoView({behavior:\'smooth\'})">Go to the Silence Drill</button>' : ''}
+     </div>
+   </div>`;
+  const gate = document.getElementById('drillGate');
+  if(gate) gate.innerHTML = gate44Message(rec.best);
+}
+function gate44Message(checkBest){
+  const rec = S.nodes['4.4'] || {best:0, passed:false};
+  const b = Math.max(checkBest || 0, rec.best || 0);
+  if(b >= 80 && S.silence.done){
+    return '<b>Node passed.</b> Check at standard and the Silence Drill complete — you can ask for the signature and hold the silence after it.';
+  }
+  if(b >= 80) return '<b>Check at standard.</b> One discipline remains: complete the <b>Silence Drill</b> above (three holds — 5s, 10s, 15s) to pass this node.';
+  return '<b>The check comes first.</b> Score 80% here, then the Silence Drill unlocks this node.';
+}
+
+/* =====================================================================
+   SILENCE DRILL — inside 4.4. Ask the closing line, then HOLD.
+   Any tap or key during a hold = you filled the silence = rep failed.
+   ===================================================================== */
+const DRILL_STEPS = [5, 10, 15];
+let D = { running:false, t0:0, timer:null, armed:false, target:0 };
+function drillHTML(){
+  return `<div class="panel anim anim-d2"><h3>🤫 The Silence Drill</h3>
+  <p>The closing line is asked. Then nothing. Hold the silence for the full count — tap or type early and the rep fails, because in a real deal, <b>you just talked a deciding customer out of their decision.</b></p>
+  <div class="drill-stage" id="drillStage">
+    <div class="drill-q" id="drillQ">Ready when you are.</div>
+    <div class="drill-timer" id="drillTimer">0.0</div>
+    <div class="drill-sub" id="drillSub">Three holds: 5 seconds, 10 seconds, 15 seconds.</div>
+    <div class="drill-reps" id="drillPips">${DRILL_STEPS.map((s,i) => `<i class="${S.silence.reps > i ? 'hit' : ''}"></i>`).join('')}</div>
+  </div>
+  <div class="center"><button class="btn btn-primary" id="drillBtn" onclick="startDrill(event)">Start Hold ${S.silence.reps + 1} — ${DRILL_STEPS[S.silence.reps] || 15}s</button></div>
+  <div class="fb" id="drillGate" style="margin-top:14px">${gate44Message((S.nodes['4.4']||{}).best || 0)}</div>
+  </div>`;
+}
+function updateDrillUI(){
+  const pips = document.getElementById('drillPips');
+  if(pips) pips.innerHTML = DRILL_STEPS.map((s,i) => `<i class="${S.silence.reps > i ? 'hit' : ''}"></i>`).join('');
+  const btn = document.getElementById('drillBtn');
+  if(btn){
+    if(S.silence.done){ btn.textContent = '✓ Drill Complete'; btn.disabled = true; }
+    else btn.textContent = 'Start Hold ' + (S.silence.reps + 1) + ' — ' + DRILL_STEPS[S.silence.reps] + 's';
+  }
+  const q = document.getElementById('drillQ');
+  if(q && !D.running) q.textContent = S.silence.done ? 'Silence held. All three counts.' : 'Ready when you are.';
+}
+function drillBreak(){
+  if(!D.armed) return;
+  endDrill(false);
+}
+function startDrill(ev){
+  if(D.running || S.silence.done) return;
+  const stage = document.getElementById('drillStage');
+  D.target = DRILL_STEPS[S.silence.reps];
+  D.running = true; D.armed = false; D.t0 = Date.now();
+  document.getElementById('drillQ').textContent = '“If we can make these numbers work, are you ready to drive it home today?”';
+  document.getElementById('drillSub').textContent = 'You asked. Now hold for ' + D.target + ' seconds. Don’t tap. Don’t type. Breathe.';
+  document.getElementById('drillBtn').disabled = true;
+  setTimeout(() => { if(D.running){ D.armed = true;
+    stage.addEventListener('pointerdown', drillBreak);
+    document.addEventListener('keydown', drillBreak);
+  }}, 400);
+  D.timer = setInterval(() => {
+    const el = (Date.now() - D.t0) / 1000;
+    const t = document.getElementById('drillTimer');
+    if(t) t.textContent = el.toFixed(1);
+    if(el >= D.target) endDrill(true);
+  }, 100);
+}
+function endDrill(success){
+  if(!D.running) return;
+  D.running = false; D.armed = false;
+  clearInterval(D.timer);
+  const stage = document.getElementById('drillStage');
+  if(stage) stage.removeEventListener('pointerdown', drillBreak);
+  document.removeEventListener('keydown', drillBreak);
+  const sub = document.getElementById('drillSub');
+  const btn = document.getElementById('drillBtn');
+  if(success){
+    const held = D.target;
+    S.silence.reps = Math.min(3, S.silence.reps + 1);
+    S.silence.best = Math.max(S.silence.best, held);
+    let xp = 25;
+    if(S.silence.reps >= 3 && !S.silence.done){ S.silence.done = true; xp += 25; }
+    awardXP(xp);
+    if(sub) sub.innerHTML = '✓ <b>Held ' + held + ' seconds.</b> ' + (S.silence.done ? 'That’s the discipline. The customer had room to decide.' : 'Next hold: ' + DRILL_STEPS[S.silence.reps] + ' seconds.');
+    const rec = S.nodes['4.4'];
+    if(S.silence.done && rec && rec.best >= 80 && !rec.passed){
+      rec.passed = true; save(); awardXP(150);
+    }
+  } else {
+    if(sub) sub.innerHTML = '✗ <b>You filled the silence.</b> In the real moment, that word you just added is the sound of a deal cooling. Reset. Breathe. Hold the next one.';
+    const q = document.getElementById('drillQ'); if(q) q.textContent = 'Ready when you are.';
+    const t = document.getElementById('drillTimer'); if(t) t.textContent = '0.0';
+  }
+  save(); updateChrome(); updateDrillUI();
+  const gate = document.getElementById('drillGate');
+  if(gate) gate.innerHTML = gate44Message((S.nodes['4.4']||{}).best || 0);
+  if(btn && !S.silence.done) btn.disabled = false;
+}
+function stopDrill(){
+  if(D.timer) clearInterval(D.timer);
+  D.running = false; D.armed = false;
+  document.removeEventListener('keydown', drillBreak);
+}
+
+/* =====================================================================
+   THE OBJECTION LAB — role-play loop + rubric + Adaptive Coach
+   ===================================================================== */
+let LAB = null, lastServedId = null;
+function openLab(){
+  const idx = UNITS.indexOf('lab');
+  if(!unitUnlocked(idx)) return;
+  stopDrill();
+  serveScenario(); goTop();
+}
+function scenarioWeight(o){
+  const st = labObj(o.id);
+  if(st.best >= 80) return -100 - st.tries;
+  return (100 - st.best) + (st.tries === 0 ? 20 : 0);
+}
+function pickScenario(){
+  const cands = OBJECTIONS.slice().sort((a,b) => scenarioWeight(b) - scenarioWeight(a));
+  let pick = cands[0];
+  if(lastServedId && pick.id === lastServedId && cands[1] && scenarioWeight(cands[1]) > -100) pick = cands[1];
+  return pick;
+}
+function serveScenario(forceId){
+  const obj = forceId ? OBJECTIONS.find(o => o.id === forceId) : pickScenario();
+  const st = labObj(obj.id);
+  const variant = (st.seen + 1) % obj.variants.length;
+  st.seen = variant; LAB = { objId: obj.id, variant }; lastServedId = obj.id;
+  save(); renderLab();
+}
+function renderLab(){
+  const obj = OBJECTIONS.find(o => o.id === LAB.objId);
+  const st = labObj(obj.id);
+  const col = PROFILES[obj.color];
+  const passed = labPassedCount();
+  const allPassed = passed >= OBJECTIONS.length;
+  let coachNote;
+  if(st.tries > 0 && st.best < 80)
+    coachNote = `🧠 <b>Adaptive Coach:</b> ${obj.name} is back — your best so far is ${st.best}%. Misses get re-served in fresh wording until they hold at 80%.`;
+  else if(st.best >= 80)
+    coachNote = `🧠 <b>Adaptive Coach:</b> You hold ${obj.name} at ${st.best}%. This rep is for sharpness — the Coach keeps mastered objections in light rotation.`;
+  else
+    coachNote = `🧠 <b>Adaptive Coach:</b> New objection in rotation. Read the customer's color, type what you'd say out loud, and the rubric will grade the rep — not your intentions.`;
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="head anim">
+    <span class="eyebrow">Phase 3 — The Objection Lab</span>
+    <h2>The Objection Lab</h2>
+    <p>${passed} of ${OBJECTIONS.length} objections at standard (80%). Pass all ten to open the money gate.</p>
+  </div>
+  <div class="lab-progress">${OBJECTIONS.map(o => `<i class="${labObj(o.id).best >= 80 ? 'hit' : ''}" title="${o.name}"></i>`).join('')}</div>
+  <div class="callout anim"><h5>How a rep works</h5><p>${coachNote}</p></div>
+  <div class="panel anim anim-d1">
+    <div style="margin-bottom:14px"><span class="chip" style="--cc:${col.color}"><i></i>${obj.name} · Customer: ${col.name} — ${col.role}</span></div>
+    <div class="said">${obj.variants[LAB.variant]}</div>
+    <textarea id="labText" placeholder="Type exactly what you'd say out loud — a full response, not a summary…"></textarea>
+    <div class="actions">
+      <button class="btn btn-primary" onclick="submitLabResponse(event)">Grade My Rep</button>
+      <button class="btn btn-ghost" onclick="serveScenario()">Different objection</button>
+    </div>
+    <div id="labResult"></div>
+  </div>
+  ${allPassed ? `<div class="verdict ready anim"><h3>Money gate: OPEN ✓</h3><p>All ten objections at standard. Phase 4 — The Desk &amp; Numbers — is unlocked.</p>
+    <div class="actions" style="justify-content:center"><button class="btn btn-primary" onclick="renderHome()">Back to map</button></div></div>` : ''}`;
+  updateChrome();
+}
+function scoreRubric(text, obj){
+  const raw = ' ' + text.toLowerCase() + ' ';
+  const tn = raw.replace(/[’‘]/g, "'").replace(/'/g, '');
+  const hasQ = text.indexOf('?') >= 0;
+  const ack = /(i understand|understand|i hear you|hear you|makes sense|that is fair|thats fair|fair point|appreciate|i get it|get it|sounds like|i see|no problem|of course|youre right|totally fair|i respect)/.test(tn);
+  const pivotHit = obj.pivotKeys.some(k => tn.indexOf(k.replace(/'/g,'')) >= 0);
+  const genericQ = /(what|which|help me understand|tell me more|can you)/.test(tn);
+  const pivot = hasQ && (pivotHit || genericQ);
+  const defense = /(take \$\d+ off|\d+ ?% off|knock .* off|lower the price|best i can do|thats our best|already discounted|cant do better|take it or leave|final price|drop the price|cut the price)/.test(tn);
+  const hype = /(amazing deal|unbelievable|once in a lifetime|trust me|act now|hurry|youd be crazy|steal of a deal|wont last|today only|dont miss out|best deal in town)/.test(tn);
+  const next = /(lets|let us|sit down|write it up|test drive|look at the numbers|paperwork|drive it|schedule|appointment|come inside|step inside|run the numbers|show you both|grab a seat)/.test(tn);
+  return [
+   { met: ack, label:'Acknowledge first',
+     hit:'You acknowledged them before answering. That’s the door.',
+     miss:'Open by acknowledging what they said before you answer it. Agreement isn’t surrender — it’s how the conversation stays open.' },
+   { met: pivot, label:'Ask the pivot',
+     hit:'You asked the question that turns an objection into information.',
+     miss:'End with a real clarifying question. The move here: ' + obj.doLine },
+   { met: !defense, label:'No price defense',
+     hit:'No discount offered, no number defended. Value stayed in charge.',
+     miss:'You defended the number or reached for a discount. The price isn’t the problem yet — the unclear comparison is.' },
+   { met: !hype, label:'No hype',
+     hit:'Clean. No pressure words, no carnival.',
+     miss:'Pressure words (“trust me”, “today only”, “amazing deal”) manufacture skeptics. Plain talk only.' },
+   { met: next, label:'Point to a next step',
+     hit:'You gave the moment somewhere to land.',
+     miss:'Give the rep a next step — sit down, look at the numbers, drive it. An objection handled with nowhere to go just evaporates.' }
+  ];
+}
+function submitLabResponse(ev){
+  const ta = document.getElementById('labText');
+  const res = document.getElementById('labResult');
+  const text = (ta.value || '').trim();
+  if(text.length < 15){
+    res.innerHTML = `<div class="fb no" style="margin-top:16px"><b>Say it like the floor.</b> A full sentence or two — what would actually come out of your mouth. The rubric can’t grade a summary.</div>`;
+    return;
+  }
+  const obj = OBJECTIONS.find(o => o.id === LAB.objId);
+  const rows = scoreRubric(text, obj);
+  const score = rows.filter(r => r.met).length * 20;
+  const st = labObj(obj.id);
+  st.tries++; if(score >= 80) st.passes++;
+  st.best = Math.max(st.best, score); st.last = Date.now();
+  save();
+  awardXP(Math.round(score * 0.6), ev);
+  const col = PROFILES[obj.color];
+  const done = labPassedCount() >= OBJECTIONS.length;
+  res.innerHTML = `
+   <div class="rubric">${rows.map((r,i) => `
+     <div class="rubric-row" style="animation-delay:${i * 0.07}s">
+       <span class="mark ${r.met ? 'y' : 'n'}">${r.met ? '✓' : '○'}</span>
+       <div><b>${r.label}</b><small>${r.met ? r.hit : r.miss}</small></div>
+     </div>`).join('')}
+   </div>
+   <div style="display:flex;align-items:center;gap:16px;margin-top:16px;flex-wrap:wrap">
+     <div class="score-big">${score}%</div>
+     <p style="font-size:13.5px;color:var(--muted);line-height:1.55;flex:1;min-width:200px">${score >= 80
+       ? '<b style="color:var(--text)">At standard.</b> This objection counts toward the money gate (' + labPassedCount() + '/' + OBJECTIONS.length + ').'
+       : '<b style="color:var(--text)">Below the 80% standard.</b> The Coach will bring this one back in fresh wording. Read the missed rows, then run it again.'}</p>
+   </div>
+   <div class="callout" style="margin-top:16px"><h5>Coaching — the ${col.name} customer</h5>
+     <p>${col.coach}</p><p style="margin-top:8px"><b>The move:</b> ${obj.doLine}</p></div>
+   <div class="actions">
+     ${done
+       ? '<button class="btn btn-primary" onclick="renderHome()">Money Gate Open — Back to Map</button>'
+       : `<button class="btn btn-primary" onclick="serveScenario()">Next Objection →</button>
+          <button class="btn btn-ghost" onclick="serveScenario('${obj.id}')">Retry This One</button>`}
+     <button class="btn btn-ghost" onclick="renderHome()">Back to map</button>
+   </div>`;
+  updateChrome();
+}
+
+/* =====================================================================
+   14-DAY FLOOR-READY TRACK — achievements only. No grades, anywhere.
+   States: Locked / In Training / Achieved / Floor-Ready.
+   ===================================================================== */
+function renderTrack(){
+  stopDrill();
+  const ready = allDone() && S.silence.done;
+  const daysDone = TRACK.filter(d => d.items.every(itemDone)).length;
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="head anim">
+    <span class="eyebrow">The 14-Day Plan</span>
+    <h2>Floor-Ready in Fourteen Days</h2>
+    <p>Same work as the map, laid out as training days. There are no letter grades here — an achievement is locked, in training, or achieved. Fourteen days of achieved, and you are <b style="color:var(--text)">Floor-Ready</b>.</p>
+  </div>
+  <div class="verdict ${ready ? 'ready' : ''} anim">
+    <h3>${ready ? 'FLOOR-READY ✓' : daysDone + ' of 14 days achieved'}</h3>
+    <p>${ready ? 'Every achievement earned. The certificate is on the map.' : 'Work the days in order, at your own pace. A “day” is a training day — the gates, not the calendar, decide when you advance.'}</p>
+  </div>
+  ${TRACK.map(d => {
+    const st = ready && d.day === 14 ? 'achieved' : dayState(d);
+    const tag = d.day === 14 && st === 'achieved' ? 'Floor-Ready ✓'
+      : st === 'achieved' ? 'Achieved' : st === 'locked' ? 'Locked' : 'In Training';
+    return `<div class="day-card ${st === 'locked' ? 'locked' : ''} ${st === 'achieved' ? 'achieved' : ''} anim">
+      <div class="day-head"><h4>Day ${d.day} — ${d.title}</h4><span class="state-tag ${st === 'achieved' ? 'achieved' : st === 'training' ? 'training' : ''}">${tag}</span></div>
+      <ul class="day-items">${d.items.map(it => `<li class="${itemDone(it) ? 'done' : ''}">${it.t}</li>`).join('')}</ul>
+    </div>`;
+  }).join('')}
+  <div class="actions"><button class="btn btn-ghost" onclick="renderHome()">← Back to map</button>
+  <button class="btn btn-ghost" onclick="renderManager()">📊 Manager View</button></div>`;
+  updateChrome(); goTop();
+}
+
+/* =====================================================================
+   MANAGER VIEW — oversight dashboard (single-trainee, local demo)
+   ===================================================================== */
+function renderManager(){
+  stopDrill();
+  const ready = allDone() && S.silence.done;
+  const missing = [];
+  UNITS.forEach(id => { if(!unitPassed(id)) missing.push(id === 'lab' ? 'Objection Lab (' + labPassedCount() + '/10)' : id + ' ' + nodeMeta(id).nd.title); });
+  if(!S.silence.done) missing.push('Silence Drill (' + S.silence.reps + '/3 holds)');
+  const focusDay = TRACK.find(d => !d.items.every(itemDone));
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="head anim">
+    <span class="eyebrow">Manager Oversight</span>
+    <h2>Manager View</h2>
+    <p>One trainee, this device — the live oversight dashboard for this Academy install. Progress, check scores, Lab weak spots, and the floor-ready verdict, all read from the same record the trainee sees.</p>
+  </div>
+  <div class="verdict ${ready ? 'ready' : ''} anim">
+    <h3>${ready ? '✓ FLOOR-READY' : 'NOT FLOOR-READY — YET'}</h3>
+    <p>${ready ? 'All five phases at standard, Silence Drill complete. Certificate issued ' + (S.certDate || todayStr()) + '.'
+      : 'Outstanding: ' + (missing.length ? missing.join(' · ') : '—') }</p>
+  </div>
+  <div class="panel anim"><h3>Trainee</h3>
+    <table class="mgr">
+      <tr><th>Color Profile</th><td>${S.profile ? PROFILES[S.profile].name + ' — ' + PROFILES[S.profile].role + ' (' + PROFILE_ORDER.map(k => k[0].toUpperCase() + ':' + (S.counts ? S.counts[k] : 0)).join(' ') + ')' : 'Assessment not taken'}</td></tr>
+      <tr><th>Total XP</th><td>${S.xp}</td></tr>
+      <tr><th>Achievements</th><td>${achievementCount()} of ${ACHIEVEMENT_TOTAL}</td></tr>
+      <tr><th>Overall Completion</th><td>${overallPct()}%</td></tr>
+      <tr><th>Training Since</th><td>${S.started || '—'}</td></tr>
+      <tr><th>14-Day Track</th><td>${TRACK.filter(d => d.items.every(itemDone)).length} of 14 days achieved${focusDay ? ' · Current focus: Day ' + focusDay.day + ' — ' + focusDay.title : ''}</td></tr>
+      <tr><th>Silence Drill</th><td>${S.silence.done ? 'Complete — best hold ' + S.silence.best + 's' : S.silence.reps + ' of 3 holds · best ' + S.silence.best + 's'}</td></tr>
+    </table>
+  </div>
+  <div class="panel anim"><h3>Phases &amp; Checks</h3>
+    <table class="mgr"><tr><th>Node</th><th>Attempts</th><th>Best</th><th>Status</th></tr>
+    ${UNITS.filter(id => id !== 'lab').map(id => { const r = S.nodes[id] || {tries:0, best:0, passed:false}; return `
+      <tr><td>${id} — ${nodeMeta(id).nd.title}</td><td>${r.tries}</td><td>${r.tries ? r.best + '%' : '—'}</td>
+      <td>${r.passed ? '✓ Achieved' : r.tries ? 'In Training' : 'Locked'}</td></tr>`; }).join('')}
+    </table>
+  </div>
+  <div class="panel anim"><h3>Objection Lab — Adaptive Record</h3>
+    <table class="mgr"><tr><th>Objection</th><th>Customer</th><th>Reps</th><th>Best</th><th>Coach Status</th></tr>
+    ${OBJECTIONS.map(o => { const st = labObj(o.id); return `
+      <tr><td>${o.name}</td><td>${PROFILES[o.color].name}</td><td>${st.tries} (${st.passes} at standard)</td>
+      <td>${st.tries ? st.best + '%' : '—'}</td>
+      <td>${st.best >= 80 ? '✓ At standard' : st.tries ? '↻ Re-serving — weak spot' : 'Not started'}</td></tr>`; }).join('')}
+    </table>
+    <p style="margin-top:12px">The Adaptive Coach weights every miss back into rotation in fresh wording until it holds at 80%. Weak spots above are exactly what the trainee's home screen shows.</p>
+  </div>
+  <div class="actions">
+    <button class="btn btn-ghost" onclick="renderHome()">← Back to map</button>
+    <button class="btn btn-ghost" onclick="renderTrack()">📅 14-Day Track</button>
+    <button class="btn btn-ghost" onclick="confirmReset()">Reset This Trainee</button>
+  </div>`;
+  updateChrome(); goTop();
+}
+
+/* =====================================================================
+   CERTIFICATE
+   ===================================================================== */
+function renderCertificate(){
+  if(!allDone()){ renderHome(); return; }
+  stopDrill();
+  if(!S.certDate){ S.certDate = todayStr(); save(); }
+  const p = PROFILES[S.profile];
+  view().innerHTML = `
+  <button class="back-link" onclick="renderHome()">← Back to map</button>
+  <div class="cert">
+    <div class="keys">🔑</div>
+    <span class="eyebrow">Talk Less, Make More — Sales Academy</span>
+    <h2>You’re <em>Floor-Ready</em>.</h2>
+    <p>Product known. Colors read. Objections handled at standard, in the open, without hype. Numbers honored. Keys handed — not slid. This certificate marks a salesperson the Academy would put on the floor today.</p>
+    <div class="cert-stats">
+      <div class="cert-stat"><h6>Profile</h6><b style="color:${p.color}">${p.name}</b></div>
+      <div class="cert-stat"><h6>Total XP</h6><b>${S.xp}</b></div>
+      <div class="cert-stat"><h6>Achievements</h6><b>${achievementCount()} / ${ACHIEVEMENT_TOTAL}</b></div>
+    </div>
+    <div class="cert-stats">
+      <div class="cert-stat"><h6>Started</h6><b style="font-size:15px">${S.started || '—'}</b></div>
+      <div class="cert-stat"><h6>Floor-Ready</h6><b style="font-size:15px">${S.certDate}</b></div>
+      <div class="cert-stat"><h6>Standard</h6><b style="font-size:15px">80% · Gated</b></div>
+    </div>
+    <p style="font-size:26px;margin-bottom:6px">🤝</p>
+    <p>The handshake is the beginning. Go take the floor.</p>
+    <div class="actions" style="justify-content:center">
+      <button class="btn btn-primary" onclick="renderHome()">Back to Map</button>
+      <button class="btn btn-ghost" onclick="renderManager()">Manager View</button>
+    </div>
+  </div>`;
+  updateChrome(); goTop(); confettiBurst();
+}
+
+/* =====================================================================
+   INIT
+   ===================================================================== */
+function confirmReset(){
+  if(confirm('Restart the Academy? This clears the profile, XP, and all progress stored on this device.')){
+    try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+    location.reload();
+  }
+}
+document.getElementById('resetBtn').addEventListener('click', confirmReset);
+document.getElementById('mgrBtn').addEventListener('click', renderManager);
+setAccent(); updateChrome(); renderHome();
+</script>
+</body>
+</html>
